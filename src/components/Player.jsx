@@ -1,58 +1,63 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import './player.css';
 
-const Player = ({ songUrl, songTitle, songImage }) => {
-  const [audio, setAudio] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+const Player = () => {
+    const currentSong = useSelector(state => state.currentSong);
+    const audioRef = useRef(new Audio());
+    const [isPlaying, setIsPlaying] = useState(false);
 
-  useEffect(() => {
-    if (songUrl) {
-      const newAudio = new Audio(songUrl);
-      setAudio(newAudio);
+    useEffect(() => {
+        if (currentSong.songUrl) {
+            audioRef.current.pause();
+            audioRef.current = new Audio(currentSong.songUrl);
+            audioRef.current.play();
+            setIsPlaying(true);
+        }
+        // Pulizia: ferma la musica quando il componente viene smontato o la canzone cambia
+        return () => {
+            audioRef.current.pause();
+        };
+    }, [currentSong.songUrl]);
 
-      newAudio.addEventListener('ended', () => setIsPlaying(false));
+    useEffect(() => {
+        // Ascoltatore per quando la canzone finisce
+        const audio = audioRef.current;
+        const handleEnded = () => setIsPlaying(false);
+        if (audio) {
+            audio.addEventListener('ended', handleEnded);
+        }
+        
+        return () => {
+            if (audio) {
+                audio.removeEventListener('ended', handleEnded);
+            }
+        };
+    }, []);
 
-      return () => {
-        newAudio.removeEventListener('ended', () => setIsPlaying(false));
-      };
-    }
-  }, [songUrl]);
+    const handlePlayPauseClick = () => {
+        const audio = audioRef.current;
+        if (isPlaying) {
+            audio.pause();
+        } else {
+            audio.play();
+        }
+        setIsPlaying(!isPlaying);
+    };
 
-  const handlePlayPauseClick = () => {
-    if (!audio) return;
-
-    if (isPlaying) {
-      audio.pause();
-    } else {
-      audio.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  const handleStopClick = () => {
-    if (!audio) return;
-
-    audio.pause();
-    audio.currentTime = 0;
-    setIsPlaying(false);
-  };
-
-  return (
-    <div className='player'>
-      <div className='song-info d-flex'>
-        {songImage && <img src={songImage} alt={songTitle} />}
-        {songTitle && <h3>{songTitle}</h3>}
-      </div>
-      <div className='controls'>
-        <button onClick={handlePlayPauseClick} disabled={!audio}>
-          {isPlaying ? 'II' : '►'}
-        </button>
-        <button onClick={handleStopClick} disabled={!audio}>
-          Stop
-        </button>
-      </div>
-    </div>
-  );
+    return (
+        <div className='player'>
+            <div className='song-info'>
+                {currentSong.songImage && <img src={currentSong.songImage} alt={currentSong.songTitle} />}
+                {currentSong.songTitle && <h3>{currentSong.songTitle}</h3>}
+            </div>
+            <div className='controls'>
+                <button onClick={handlePlayPauseClick}>
+                    {isPlaying ? 'Pause' : 'Play'}
+                </button>
+            </div>
+        </div>
+    );
 };
 
 export default Player;
