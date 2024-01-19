@@ -1,3 +1,32 @@
 .albumDetails {
-    margin-left: 250px
+    margin-left: 250px;
+    margin-bottom: 95px;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    background-color: rgb(1, 29, 29);
+    img {
+        margin-top: 7rem;
+        width: 25%;
+        height: 25%;
+    }
+}
+
+.singleTrack {
+    display: flex;
+    align-items: center;
+}
+
+.albumDetails ol {
+    list-style-type: none; 
+    counter-reset: item-counter; 
+}
+
+.albumDetails ol li {
+    counter-increment: item-counter; 
+}
+
+.albumDetails ol li::before {
+    content: counter(item-counter) " "; 
+    color: white
 }

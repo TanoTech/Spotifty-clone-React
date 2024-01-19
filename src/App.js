@@ -6,6 +6,8 @@ import AlbumDetails from './components/AlbumDetails';
 import Player from './components/Player';
 import Favourites from './components/Favourites'; 
 import './components/sidebar.css';
+import './App.css'
+
 
 const App = () => {
   const [searchResults, setSearchResults] = useState([]);

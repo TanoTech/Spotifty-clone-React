@@ -59,21 +59,23 @@ const AlbumDetails = () => {
             <div>
                 <h2>{album.title || 'Titolo sconosciuto'}</h2>
                 <p>{album.artist?.name || 'Artista sconosciuto'}</p>
-                <ul>
+                <ol>
                     {songs.map((song) => (
                         <li key={song.id}>
-                            <span onClick={() => handleSongClick(song)}>
-                                {song.title || 'Titolo sconosciuto'}
-                            </span>
-                            <button
-                                onClick={() => handleAddToFavourites(song)}
-                                className={isFavourite(song.id) ? 'heart-icon-favourite' : 'heart-icon-not-favourite'} 
-                            >
-                                ♡
-                            </button>
+                            <div className='singleTrack'>
+                                <p onClick={() => handleSongClick(song)}>
+                                    {song.title || 'Titolo sconosciuto'}
+                                </p>
+                                <div
+                                    onClick={() => handleAddToFavourites(song)}
+                                    className={isFavourite(song.id) ? 'heart-icon-favourite' : 'heart-icon-not-favourite'} 
+                                >
+                                    ♡
+                                </div>
+                            </div>
                         </li>
                     ))}
-                </ul>
+                </ol>
             </div>
         </Container> 
     );
