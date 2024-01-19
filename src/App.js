@@ -11,6 +11,8 @@ const App = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedSongUrl, setSelectedSongUrl] = useState(null);
   const [favourites, setFavourites] = useState([]);
+  const [selectedSongTitle, setSelectedSongTitle] = useState(''); 
+  const [selectedSongImage, setSelectedSongImage] = useState(''); 
 
   useEffect(() => {
     const storedFavourites = localStorage.getItem('favourites');
@@ -40,11 +42,25 @@ const App = () => {
       </section>
       <Routes>
         <Route path="/" element={<Home searchResults={searchResults} />} />
-        <Route path="/album/:albumId" element={<AlbumDetail onSongSelect={setSelectedSongUrl} onAddToFavourites={addToFavourites} />} />
+        <Route
+          path="/album/:albumId"
+          element={
+            <AlbumDetail
+              onSongSelect={setSelectedSongUrl}
+              onAddToFavourites={addToFavourites}
+              onSongTitleChange={setSelectedSongTitle}
+              onSongImageChange={setSelectedSongImage}
+            />
+          }
+        />
         <Route path="/favourites" element={<Favourites favourites={favourites} onRemoveFromFavourites={removeFromFavourites} />} />
       </Routes>   
       <footer>
-        <Player songUrl={selectedSongUrl} />  
+        <Player
+          songUrl={selectedSongUrl}
+          songTitle={selectedSongTitle}
+          songImage={selectedSongImage}
+        />  
       </footer>
     </BrowserRouter>
   );

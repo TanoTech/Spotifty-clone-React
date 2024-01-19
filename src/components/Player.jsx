@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './player.css';
 
-const Player = ({ songUrl }) => {
+const Player = ({ songUrl, songTitle, songImage }) => {
   const [audio, setAudio] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -19,7 +19,7 @@ const Player = ({ songUrl }) => {
   }, [songUrl]);
 
   const handlePlayPauseClick = () => {
-    if (!audio) return; 
+    if (!audio) return;
 
     if (isPlaying) {
       audio.pause();
@@ -29,12 +29,28 @@ const Player = ({ songUrl }) => {
     setIsPlaying(!isPlaying);
   };
 
+  const handleStopClick = () => {
+    if (!audio) return;
+
+    audio.pause();
+    audio.currentTime = 0;
+    setIsPlaying(false);
+  };
+
   return (
     <div className='player'>
-      <h2>Player</h2>
-      <button onClick={handlePlayPauseClick} disabled={!audio}>
-        {isPlaying ? 'Pausa' : 'Play'}
-      </button>
+      <div className='song-info'>
+        {songImage && <img src={songImage} alt={songTitle} />}
+        {songTitle && <h3>{songTitle}</h3>}
+      </div>
+      <div className='controls'>
+        <button onClick={handlePlayPauseClick} disabled={!audio}>
+          {isPlaying ? 'Pausa' : 'Play'}
+        </button>
+        <button onClick={handleStopClick} disabled={!audio}>
+          Stop
+        </button>
+      </div>
     </div>
   );
 };

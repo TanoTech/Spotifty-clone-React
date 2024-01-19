@@ -83,3 +83,4 @@ npm install sass
 npm install react-bootstrap-icons 
 npm install @reduxjs/toolkit react-redux
 npm install @reduxjs/toolkit react-redux
+npm install music-metadata-browser

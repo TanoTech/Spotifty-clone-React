@@ -13,6 +13,7 @@
     "axios": "^1.6.5",
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.3",
+    "music-metadata-browser": "^2.5.10",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.0",
     "react-bootstrap-icons": "^1.10.3",
