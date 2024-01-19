@@ -1,0 +1,16 @@
+.album-section>.row {
+    display: flex !important;
+
+    .albumCover {
+        width: 100%;
+    }
+
+    div {
+        margin: 0.1rem;
+        width: 70%;
+    }
+
+    img {
+        box-sizing: content-box;
+    }
+}

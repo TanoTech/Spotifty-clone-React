@@ -1,0 +1,14 @@
+.search-results {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1rem;
+    p {
+        width: 50%
+    };
+    img {
+        width: 70%;
+    }
+    a {
+        width: 20%;
+    }
+}
