@@ -27,7 +27,7 @@ const AlbumSection = ({ title, albums }) => {
         {limitedAlbums.map((album) => (
           <Col  key={album.id}>
             <div className="album-card" onClick={() => handleAlbumClick(album)}>
-              <div className='coverAlbum'><img src='' alt={album.title} /></div>
+              <div className='coverAlbum'><img src={album.album.cover_medium} alt={album.title} /></div>
               <p>{album.artist?.name}</p>
             </div>
           </Col>
