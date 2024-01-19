@@ -1,7 +1,15 @@
 import React from 'react';
-import './favourites.css'
+import { useSelector, useDispatch } from 'react-redux';
+import { removeFromFavourites } from '../redux/actions/index';
+import './favourites.css';
 
-const Favourites = ({ favourites, onRemoveFromFavourites }) => {
+const Favourites = () => {
+    const favourites = useSelector(state => state.favourites);
+    const dispatch = useDispatch();
+
+    const handleRemoveFromFavourites = (songId) => {
+        dispatch(removeFromFavourites(songId));
+    };
 
     return (
         <main className='favoriti'>
@@ -10,7 +18,7 @@ const Favourites = ({ favourites, onRemoveFromFavourites }) => {
                 {favourites.map(song => (
                     <li key={song.id}>
                         {song.title}
-                        <button onClick={() => onRemoveFromFavourites(song.id)}>X</button>
+                        <button onClick={() => handleRemoveFromFavourites(song.id)}>X</button>
                     </li>
                 ))}
             </ul>

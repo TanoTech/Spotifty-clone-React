@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Container } from 'react-bootstrap';
 import { useParams, Link } from 'react-router-dom';
+import { addToFavourites } from '../redux/actions/index';
 import './albumDetails.css';
 
-const AlbumDetail = ({ onSongSelect, onAddToFavourites, onSongTitleChange, onSongImageChange }) => {
+const AlbumDetails = ({ onSongSelect, onSongTitleChange, onSongImageChange }) => {
     const { albumId } = useParams();
     const [album, setAlbum] = useState({});
     const [songs, setSongs] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [favourites, setFavourites] = useState(new Set());
+    const dispatch = useDispatch();
+    const favourites = useSelector(state => state.favourites);
+
+
+    const isFavourite = (songId) => {
+        return favourites.some(fav => fav.id === songId);
+    };
 
     useEffect(() => {
         const fetchAlbumData = async () => {
@@ -34,13 +42,12 @@ const AlbumDetail = ({ onSongSelect, onAddToFavourites, onSongTitleChange, onSon
 
     const handleSongClick = (song) => {
         onSongSelect(song.preview);
-        onSongTitleChange(song.title); // Aggiungi il titolo della canzone selezionata
-        onSongImageChange(song.album.cover_medium); // Aggiungi l'URL dell'immagine della canzone selezionata
+        onSongTitleChange(song.title);
+        onSongImageChange(song.album.cover_medium);
     };
 
     const handleAddToFavourites = (song) => {
-        onAddToFavourites(song);
-        setFavourites(new Set(favourites.add(song.id)));
+        dispatch(addToFavourites(song));
     };
 
     if (loading) {
@@ -59,12 +66,12 @@ const AlbumDetail = ({ onSongSelect, onAddToFavourites, onSongTitleChange, onSon
                             <span onClick={() => handleSongClick(song)}>
                                 {song.title || 'Titolo sconosciuto'}
                             </span>
-                            <Link 
+                            <button
                                 onClick={() => handleAddToFavourites(song)}
-                                className={favourites.has(song.id) ? 'favourite' : ''} 
+                                className={isFavourite(song.id) ? 'heart-icon-favourite' : 'heart-icon-not-favourite'} 
                             >
-                                ♥️
-                            </Link>
+                                ♡
+                            </button>
                         </li>
                     ))}
                 </ul>
@@ -73,4 +80,4 @@ const AlbumDetail = ({ onSongSelect, onAddToFavourites, onSongTitleChange, onSon
     );
 };
 
-export default AlbumDetail;
+export default AlbumDetails;

@@ -39,13 +39,13 @@ const Player = ({ songUrl, songTitle, songImage }) => {
 
   return (
     <div className='player'>
-      <div className='song-info'>
+      <div className='song-info d-flex'>
         {songImage && <img src={songImage} alt={songTitle} />}
         {songTitle && <h3>{songTitle}</h3>}
       </div>
       <div className='controls'>
         <button onClick={handlePlayPauseClick} disabled={!audio}>
-          {isPlaying ? 'Pausa' : 'Play'}
+          {isPlaying ? 'II' : '►'}
         </button>
         <button onClick={handleStopClick} disabled={!audio}>
           Stop

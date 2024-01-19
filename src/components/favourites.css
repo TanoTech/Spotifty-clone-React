@@ -2,6 +2,10 @@
     margin-left: 250px;
 }
 
-.favourite {
-    color:red;
+.heart-icon-favourite {
+    color: red;
+}
+
+.heart-icon-not-favourite {
+    color: grey;
 }

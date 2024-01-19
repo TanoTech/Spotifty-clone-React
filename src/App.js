@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Sidebar from './components/Side';
 import Home from './components/Home';
-import AlbumDetail from './components/AlbumDetails';
+import AlbumDetails from './components/AlbumDetails';
 import Player from './components/Player';
 import Favourites from './components/Favourites'; 
 import './components/sidebar.css';
@@ -10,29 +10,19 @@ import './components/sidebar.css';
 const App = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedSongUrl, setSelectedSongUrl] = useState(null);
-  const [favourites, setFavourites] = useState([]);
   const [selectedSongTitle, setSelectedSongTitle] = useState(''); 
-  const [selectedSongImage, setSelectedSongImage] = useState(''); 
+  const [selectedSongImage, setSelectedSongImage] = useState('');
 
-  useEffect(() => {
-    const storedFavourites = localStorage.getItem('favourites');
-    if (storedFavourites) {
-        setFavourites(JSON.parse(storedFavourites));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('favourites', JSON.stringify(favourites));
-  }, [favourites]);
-
-  const addToFavourites = (song) => {
-    if (!favourites.some(favourite => favourite.id === song.id)) {
-      setFavourites(prevFavourites => [...prevFavourites, song]);
-    }
+  const handleSongSelect = (url) => {
+    setSelectedSongUrl(url);
   };
 
-  const removeFromFavourites = (songId) => {
-    setFavourites(prevFavourites => prevFavourites.filter(song => song.id !== songId));
+  const handleSongTitleChange = (title) => {
+    setSelectedSongTitle(title);
+  };
+
+  const handleSongImageChange = (image) => {
+    setSelectedSongImage(image);
   };
 
   return (
@@ -45,15 +35,14 @@ const App = () => {
         <Route
           path="/album/:albumId"
           element={
-            <AlbumDetail
-              onSongSelect={setSelectedSongUrl}
-              onAddToFavourites={addToFavourites}
-              onSongTitleChange={setSelectedSongTitle}
-              onSongImageChange={setSelectedSongImage}
+            <AlbumDetails
+              onSongSelect={handleSongSelect}
+              onSongTitleChange={handleSongTitleChange}
+              onSongImageChange={handleSongImageChange}
             />
           }
         />
-        <Route path="/favourites" element={<Favourites favourites={favourites} onRemoveFromFavourites={removeFromFavourites} />} />
+        <Route path="/favourites" element={<Favourites />} />
       </Routes>   
       <footer>
         <Player
