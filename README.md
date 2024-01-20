@@ -7,13 +7,11 @@ Pagina dettagli album.
 3 - Elenca le canzoni dell'album con anteprime e possibilità di aggiungerle ai preferiti.
 
 ## AlbumSection
-Sezione di album nella pagina principale. 
+Sezione di canzoni divise per genere nella pagina principale. 
 Funzionalità principali includono:
 
-1 - Mostra una lista di album con immagini, titoli e nomi degli artisti.
-2 - Ciascun album è un collegamento che reindirizza alla pagina dei dettagli dell'album quando viene cliccato.
-3 - Utilizza la prop onAlbumClick per gestire l'evento di clic su un album.
-
+1 - Mostra una lista di canzoni con immagini, titoli e nomi degli artisti.
+2 - Le canzoni vengono riprodotte appena cliccate.
 
 ## Favourites
 
@@ -22,7 +20,6 @@ Funzionalità principali includono:
 
 1 - Visualizza la lista delle canzoni preferite.
 2 - Permette di rimuovere le canzoni dai preferiti cliccando su un pulsante "X".
-
 
 ## GenresPage
 Mstra sezioni di album per diversi generi musicali. 
@@ -74,6 +71,13 @@ Funzionalità principali includono:
 2 - Utilizza il componente Home per la visualizzazione della pagina principale.
 3 - Gestisce lo stato delle canzoni preferite e il player audio.
 
+## REDUCERS
+
+Ho definito tre azioni - ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES, e SET_CURRENT_SONG. 
+
+Il favouritesReducer gestisce l'aggiunta e la rimozione di canzoni dai preferiti.
+
+Il songReducer gestisce lo stato della canzone corrente.
 
 ## NPM INSTALLATI
 
